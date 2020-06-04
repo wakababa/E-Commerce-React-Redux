@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { addProduct } from "../redux/cart/actions";
 
 function ProductsList(props) {
-  const { addProduct,addedItems } = props;
+  const { addProduct,addedItems,products } = props;
 
   return (
     <div className="container-xl">
@@ -14,7 +14,7 @@ function ProductsList(props) {
       </h3>
       <Filter />
       <div className="row justify-content-center">
-        {datas.map((data, key) => (
+        {products.map((data, key) => (
           <div key={key} className="card col-md-4 m-3 shadow-lg p-3">
             <img
               src={data.img}

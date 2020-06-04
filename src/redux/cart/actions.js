@@ -1,4 +1,4 @@
-import {ADD_PRODUCT,REMOVE_PRODUCT,UP_QUANTITY,DOWN_QUANTITY} from './action-types'
+import {ADD_PRODUCT,REMOVE_PRODUCT,UP_QUANTITY,DOWN_QUANTITY,CLEAR_ALL} from './action-types'
 
 export const addProduct = product => ({
     type:ADD_PRODUCT,

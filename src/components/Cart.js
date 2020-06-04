@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import datas from "../data/data.json";
 import { connect } from "react-redux";
-import { removeProduct ,upQuantity,downQuantity} from "../redux/cart/actions";
+import { removeProduct, upQuantity, downQuantity } from "../redux/cart/actions";
 
 function Cart(props) {
-  const { cartList, removeProduct,upQuantity,downQuantity } = props;
+  const { cartList, removeProduct, upQuantity, downQuantity, total } = props;
 
   const [numberChange, setNumberChange] = useState(" ");
-  console.log(props);
+
+  const handleSubmit=(price)=>{
+
+    alert(`You payed ${price} $`)
+  }
 
   return (
     <div
@@ -59,20 +63,13 @@ function Cart(props) {
                     </div>
 
                     <div className="col-sm-8">
-                      <button
-                        onClick={() => removeProduct(data.id)}
-                        type="button"
-                        className="close m-2 text-danger"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                     
                       <div className="card-body">
                         <h6 className="card-title">{data.shortName}</h6>
                         <p className="card-text">Price: {data.price} $</p>
                         <svg
                           cursor="pointer"
-                          onClick={()=>downQuantity(data.id)}
+                          onClick={() => downQuantity(data.id)}
                           class="bi bi-dash"
                           width="1.5em"
                           height="1.5em"
@@ -87,7 +84,7 @@ function Cart(props) {
                         </svg>
                         <span class="badge badge-light">{data.quantity}</span>
                         <svg
-                          onClick={()=>upQuantity(data.id)}
+                          onClick={() => upQuantity(data.id)}
                           cursor="pointer"
                           class="bi bi-plus"
                           width="1.5em"
@@ -105,6 +102,15 @@ function Cart(props) {
                             d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"
                           />
                         </svg>
+                        <button
+                        onClick={() => removeProduct(data.id)}
+                        type="button"
+                        className="close m-2 text-danger"
+                        aria-label="Close"
+                      >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                        {/* <span aria-hidden="true">&times;</span> */}
+                      </button>
                       </div>
                     </div>
                   </div>
@@ -112,18 +118,20 @@ function Cart(props) {
               ))
             )}
           </div>
+
           <div className="modal-footer">
             <button
               type="button"
-              className="btn btn-danger"
+              className="btn btn-danger "
               data-dismiss="modal"
             >
               Close
             </button>
-            <button type="button" className="btn btn-danger">
-              Clear All
-            </button>
-            <button type="button" className="btn btn-success">
+            
+            <h6>{total === 0 ? null : <span>Total Price : {total}$</span>}</h6>
+            <button 
+            onClick={()=>handleSubmit(total)}
+            type="button" className="btn btn-success">
               Buy
             </button>
           </div>
@@ -133,8 +141,8 @@ function Cart(props) {
   );
 }
 const mapStateToProps = (state) => {
-  const { cartList ,products} = state;
-  return { cartList ,products};
+  const { cartList, products, total } = state;
+  return { cartList, products, total };
 };
 
 const mapDispatchToProps = (dispatch) => {

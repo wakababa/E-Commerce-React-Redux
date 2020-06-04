@@ -1,4 +1,4 @@
-import { ADD_PRODUCT,REMOVE_PRODUCT,UP_QUANTITY,DOWN_QUANTITY } from "./action-types";
+import { ADD_PRODUCT,REMOVE_PRODUCT,UP_QUANTITY,DOWN_QUANTITY,CLEAR_ALL } from "./action-types";
 
 const initialState = {
   products: [
@@ -9,7 +9,7 @@ const initialState = {
       tags: ["Personal Computers", "Asus", "VivoBook"],
       shortName: "ASUS VIVOBOOK L203MA",
       quantity:1,
-      price: 269.99,
+      price: 260,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/ASUS/thumb/TeoriV2-105166_large.jpg",
     },
@@ -20,7 +20,7 @@ const initialState = {
       tags: ["Personal Computers", "Asus", "VivoBook"],
       shortName: "ASUS VIVOBOOK 15 THIN",
       quantity:1,
-      price: 399.99,
+      price: 400,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/ASUS/thumb/TeoriV2-105164_large.jpg",
     },
@@ -31,7 +31,7 @@ const initialState = {
       tags: ["Gaming Computers", "Asus", "Tuf"],
       shortName: "ASUS TUF GAMING",
       quantity:1,
-      price: 829.99,
+      price: 500,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/ASUS/thumb/TeoriV2-107585_large.jpg",
     },
@@ -42,7 +42,7 @@ const initialState = {
       tags: ["Gaming Computers", "Asus", "Rog"],
       shortName: "ASUS ROG STRIX",
       quantity:1,
-      price: 1249.99,
+      price: 1200,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/ASUS/thumb/TeoriV2-106598_large.jpg",
     },
@@ -52,7 +52,7 @@ const initialState = {
         "2019 ASUS ROG 15.6 FHD Gaming Laptop Computer, Intel Hexa-Core i7-9750H Up to 4.5GHz, 16GB DDR4, 1TB HDD + 512GB SSD, NVIDIA GeForce GTX 1650, 802.11ac WiFi, HDMI, USB 3.0, Windows 10",
       tags: ["Gaming Computers", "Asus", "Rog"],
       shortName: "2019 ASUS TUF GAMING",
-      price: 1049.0,
+      price: 1000,
       quantity:1,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/ASUS/thumb/TeoriV2-106598_large.jpg",
@@ -64,7 +64,7 @@ const initialState = {
       tags: ["Personal Computers", "Macbook Pro"],
       shortName: "APPLE 13.3 MACBOOK PRO",
       quantity:1,
-      price: 985.0,
+      price: 985,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/APPLE/thumb/TeoriV2-101938-2_large.jpg",
     },
@@ -75,7 +75,7 @@ const initialState = {
       tags: ["Personal Computers", "Macbook Pro"],
       shortName: "APPLE 15.4 MACBOOK PRO",
       quantity:1,
-      price: 1600.0,
+      price: 1600,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/APPLE/thumb/TeoriV2-105268-4_large.jpg",
     },
@@ -86,65 +86,75 @@ const initialState = {
       tags: ["Personal Computers", "Hp"],
       shortName: "New HP 15.6 HD",
       quantity:1,
-      price: 529.0,
+      price: 5000,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/HP/thumb/TeoriV2-105608_large.jpg",
     },
   ],
   cartList: [],
-  addedItems:0
+  addedItems:0,
+  total:0
 };
 
 function rootReducer(state = initialState, action) {
-  const { cartList, products,addedItems } = state;
+  const { cartList, products,addedItems ,total} = state;
   // const data = [products[action.payload]];
   let addData = products.find((item) => item.id === action.payload);
   let isItem = cartList.find((item)=>item.id === action.payload);
-  let newData = cartList.filter(item=> item.id !== action.payload)
+  let newData = cartList.filter(item=> item.id !== action.payload);
+
   switch (action.type) {
     case ADD_PRODUCT:
         if(isItem){
-            
             isItem.quantity += 1
             
             return{
                 ...state,
                 cartList: [...state.cartList],
+                total : state.total + addData.price
             }
         }else{
             
             return {
                 ...state,
                 cartList: [...state.cartList, addData],
-                addedItems : addedItems + 1
+                addedItems : addedItems + 1,
+                total : state.total + addData.price
+                
               }
         }
       
      case REMOVE_PRODUCT:
-        isItem.quantity = 1
+       
          return{
              ...state,
              cartList :newData,
-             addedItems: addedItems -1 
+             addedItems: addedItems -1 ,
+             total : total - ( addData.price * addData.quantity )
          }
+
          case UP_QUANTITY :
              isItem.quantity += 1
              return {
                 ...state,
                 cartList: [...state.cartList],
+                total : state.total + addData.price
+
              }
          case DOWN_QUANTITY :
             if(isItem.quantity === 1){
                 return{
                     ...state,
                 cartList: newData,
-                addedItems: addedItems -1 
+                addedItems: addedItems -1 ,
+                total : state.total - addData.price 
                 }
             }else{
                 isItem.quantity -= 1
                 return {
                     ...state,
                     cartList: [...state.cartList],
+                    total : state.total - addData.price 
                 }
             }
     default:
