@@ -38,6 +38,7 @@ function Cart(props) {
             <h5 className="modal-title text-danger m-1 " id="exampleModalLabel">
               Cart
             </h5>
+            {total === 0 ? null : <span className="m-2">Total Price : {total}$</span>}
             <button
               type="button"
               className="close text-danger"
@@ -128,7 +129,7 @@ function Cart(props) {
               Close
             </button>
             
-            <h6>{total === 0 ? null : <span>Total Price : {total}$</span>}</h6>
+            {total === 0 ? null : <span className="m-2">Total Price : {total}$</span>}
             <button 
             onClick={()=>handleSubmit(total)}
             type="button" className="btn btn-success">
