@@ -1,0 +1,4 @@
+export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+export const DOWN_QUANTITY = 'DOWN_QUANTITY';
+export const UP_QUANTITY = 'UP_QUANTITY';
