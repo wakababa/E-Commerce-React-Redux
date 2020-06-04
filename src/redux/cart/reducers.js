@@ -52,8 +52,8 @@ const initialState = {
         "2019 ASUS ROG 15.6 FHD Gaming Laptop Computer, Intel Hexa-Core i7-9750H Up to 4.5GHz, 16GB DDR4, 1TB HDD + 512GB SSD, NVIDIA GeForce GTX 1650, 802.11ac WiFi, HDMI, USB 3.0, Windows 10",
       tags: ["Gaming Computers", "Asus", "Rog"],
       shortName: "2019 ASUS TUF GAMING",
-      price: 1000,
       quantity:1,
+      price: 1000,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/ASUS/thumb/TeoriV2-106598_large.jpg",
     },
@@ -99,22 +99,30 @@ const initialState = {
 function rootReducer(state = initialState, action) {
   const { cartList, products,addedItems ,total} = state;
   // const data = [products[action.payload]];
+  //FIND PRODUCT
   let addData = products.find((item) => item.id === action.payload);
+  // IF WE HAVE SAME ITEM 
   let isItem = cartList.find((item)=>item.id === action.payload);
+  // DELETE DATA
   let newData = cartList.filter(item=> item.id !== action.payload);
 
+  
+  
+  //calculating the total
+
   switch (action.type) {
+
+
     case ADD_PRODUCT:
         if(isItem){
             isItem.quantity += 1
-            
             return{
                 ...state,
                 cartList: [...state.cartList],
                 total : state.total + addData.price
             }
         }else{
-            
+           
             return {
                 ...state,
                 cartList: [...state.cartList, addData],
@@ -125,13 +133,17 @@ function rootReducer(state = initialState, action) {
         }
       
      case REMOVE_PRODUCT:
-       
-         return{
+
+     const newTotal = total - (addData.price * addData.quantity);
+        isItem.quantity = 1;
+        
+     return{
              ...state,
              cartList :newData,
              addedItems: addedItems -1 ,
-             total : total - ( addData.price * addData.quantity )
-         }
+             total : newTotal
+        }
+     
 
          case UP_QUANTITY :
              isItem.quantity += 1
@@ -160,6 +172,7 @@ function rootReducer(state = initialState, action) {
     default:
       return state;
   }
+ 
 }
 
 export default rootReducer;
