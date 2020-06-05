@@ -42,7 +42,7 @@ const initialState = {
       tags: ["Gaming Computers", "Asus", "Rog"],
       shortName: "ASUS ROG STRIX",
       quantity:1,
-      price: 1200,
+      price: 2200,
       img:
         "https://cdn.vatanbilgisayar.com/Upload/PRODUCT/ASUS/thumb/TeoriV2-106598_large.jpg",
     },

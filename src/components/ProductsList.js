@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import datas from "../data/data.json";
 import Filter from "./Filter";
 import { connect } from "react-redux";
@@ -6,15 +6,82 @@ import { addProduct } from "../redux/cart/actions";
 
 function ProductsList(props) {
   const { addProduct,addedItems,products } = props;
+  const [filter, setfilter] = useState('All');
+  const [list, setlist] = useState(products)
+  // const [filter, setfilter] = useState([]);
+  const [isOn, setisOn] = useState(false);
+  const handleFilter = (e) => {
+    console.log(e.target.value);
+    const result = e.target.value;
+    setfilter(result);
+  
+     if(result === 'Low to High'){
+         
+       const lists = products.sort(function (a,b){
+        return a.price - b.price;
+       });
+       setlist(lists);
+       console.log('waka');
+       console.log(list);
+    } else if(result === 'High to Low'){
+      const lists = products.sort(function (a,b){
+        return b.price - a.price;
+       });
 
+       setlist(lists);
+       
+    }else if (result === 'A - Z'){
+     const lists = products.sort(function(a, b) {
+    var nameA = a.shortName.toUpperCase(); // ignore upper and lowercase
+    var nameB = b.shortName.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
+  });
+  setlist(lists);
+
+    }else if(result === 'Z - A'){
+      const lists = products.sort(function(a, b) {
+    var nameA = a.shortName.toUpperCase(); // ignore upper and lowercase
+    var nameB = b.shortName.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
+  });
+  const data = lists.reverse();
+  setlist(data);
+    }
+  };
+
+  const handleModel = (e) => {
+    console.log(e.target.value);
+    // const result = e.target.value;
+    // setfilter(filter=> [...filter ,result]);
+    if(e.target.value === 'A - Z'){
+       
+    }
+  };
+  
   return (
     <div className="container-xl">
       <h3 className="text-center text-monospace font-weight-bold  mt-3">
         NEW LAPTOPS
       </h3>
-      <Filter />
+      <Filter handleModel={handleModel} handleFilter={handleFilter} />
       <div className="row justify-content-center">
-        {products.map((data, key) => (
+        {list.map((data, key) => (
           <div key={key} className="card col-md-4 m-3 shadow-lg p-3">
             <img
               src={data.img}
