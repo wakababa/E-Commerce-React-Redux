@@ -8,8 +8,7 @@ function ProductsList(props) {
   const { addProduct,addedItems,products } = props;
   const [filter, setfilter] = useState('All');
   const [list, setlist] = useState(products)
-  // const [filter, setfilter] = useState([]);
-  const [isOn, setisOn] = useState(false);
+
   const handleFilter = (e) => {
     console.log(e.target.value);
     const result = e.target.value;
@@ -62,6 +61,10 @@ function ProductsList(props) {
   });
   const data = lists.reverse();
   setlist(data);
+    }
+    else if(result === 'All'){
+      const lists = products;
+      setlist(lists);
     }
   };
 

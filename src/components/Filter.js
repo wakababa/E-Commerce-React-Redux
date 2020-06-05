@@ -72,10 +72,8 @@ function Filter(props) {
                 class="custom-select my-1 mr-sm-2"
                 id="inlineFormCustomSelectPref"
               >
-                <option value="All" selected>
-                  All
-                </option>
-                <option value="A - Z">A - Z</option>
+               
+                <option value="A - Z" selected>A - Z</option>
                 <option value="Z - A">Z - A</option>
                 <option value="High to Low">High to Low</option>
                 <option value="Low to High">Low to High</option>
