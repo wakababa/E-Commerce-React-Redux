@@ -23,11 +23,12 @@ function Filter(props) {
         </div>
         <div class="card-body">
           <h6 class="card-title">Choose your favorite models</h6>
-          <div className="row">
+          {/* <div className="row">
             <div className="col">
               <div class="custom-control custom-checkbox my-1 mr-sm-2">
                 <input
                   onChange={(e) => props.handleModel(e)}
+                  value="apple"
                   type="checkbox"
                   class="custom-control-input"
                   id="apple"
@@ -41,6 +42,7 @@ function Filter(props) {
               <div class="custom-control custom-checkbox my-1 mr-sm-2">
                 <input
                   onChange={(e) => props.handleModel(e)}
+                  value="asus"
                   type="checkbox"
                   class="custom-control-input"
                   id="asus"
@@ -54,6 +56,7 @@ function Filter(props) {
               <div class="custom-control custom-checkbox my-1 mr-sm-2">
                 <input
                   onChange={(e) => props.handleModel(e)}
+                  value="hp"
                   type="checkbox"
                   class="custom-control-input"
                   id="hp"
@@ -63,7 +66,9 @@ function Filter(props) {
                 </label>
               </div>
             </div>
-          </div>
+            <div className="col">
+            </div>
+          </div> */}
 
           <div className="row ">
             <div className="col">
